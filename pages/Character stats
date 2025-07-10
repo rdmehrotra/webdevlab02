@@ -1,0 +1,5 @@
+import streamlit as st
+import random as r
+st.header('Character stats')
+st.write('This will bring up the back story and powers of a character of your chossing')
+st.write('If you cannot pick a character then hit the random button')
