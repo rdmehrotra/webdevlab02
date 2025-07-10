@@ -1,4 +1,5 @@
 import streamlit as st
+import requests 
 import random as r
 st.header('Character stats')
 st.write('This will bring up the back story and powers of a character of your chossing')
