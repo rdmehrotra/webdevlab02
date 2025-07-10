@@ -1,13 +1,47 @@
 import streamlit as st
 import random as r
 import requests
+
 st.header('Showdown')
-st.write('This is a showdown between two characters of your choice, we also give a tell you each character's powers.')
+st.write("This is a showdown between two characters of your choice, we also give a tell you each character's powers.")
+
 url = 'https://akabab.github.io/superhero-api/api/all.json'
-respouse = requests.get(url)
+resposue = requests.get(url)
+heroes = resposue.json()
 hero_list = []
+
 for hero in heroes:
   hero_list.append(hero['name'])
-st.selectbox('Pick hero 1', hero_list, index=0)
-st.selectbox('Pick hero 2', hero_list, index=1)
-st.write('You may also hit the random bottom if you cannot choose')
+
+hero_name1 = st.selectbox('Pick hero 1', hero_list, index=0)
+hero_name2 = st.selectbox('Pick hero 2', hero_list, index=1)
+
+if st.button('🎲 Pick Random Heroes'):
+  hero_name1 = r.choice(hero_list)
+  hero_name2 = r.choice(hero_list)
+
+for hero in heroes:
+  if hero['name'] == hero_name1:
+    hero1 = hero
+for hero in heroes:
+  if hero['name'] == hero_name2:
+    hero2 = hero
+
+def total_power(stats):
+  total = (stats.get("intelligence", 0) + stats.get("strength", 0) + stats.get("speed", 0) + stats.get("durability", 0)
+        + stats.get("power", 0) + stats.get("combat", 0))
+  return total
+st.subheader('first hero')
+st.image(hero1['images']['md'], caption = f"{hero1['name']}")
+st.write(f"Total Power {total_power(hero1['powerstats'])}")
+
+st.subheader('second hero')
+st.image(hero2['images']['md'], caption = f"{hero2['name']}")
+st.write(f"Total Power {total_power(hero2['powerstats'])}")
+
+if total_power(hero2['powerstats']) > total_power(hero1['powerstats']):
+  st.write(f"{hero2['name']} would win this fight")
+else:
+  st.write("{hero1['name']} would win this fight")
+
+
