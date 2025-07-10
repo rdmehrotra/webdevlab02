@@ -1,0 +1,5 @@
+import streamlit as st
+import random as r
+st.header('Showdown')
+st.write('This is a showdown between two characters of your choice, we also give a tell you each character's powers.')
+st.write('You may also hit the random bottom if you cannot choose')
